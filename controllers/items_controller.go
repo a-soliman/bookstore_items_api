@@ -1,12 +1,15 @@
 package controllers
 
 import (
-	"fmt"
+	"encoding/json"
+	"io/ioutil"
 	"net/http"
 
 	"github.com/a-soliman/bookstore_items_api/domain/items"
 	"github.com/a-soliman/bookstore_items_api/services"
+	"github.com/a-soliman/bookstore_items_api/utils/http_utils"
 	"github.com/a-soliman/bookstore_oauth-go/oauth"
+	"github.com/a-soliman/bookstore_utils-go/rest_errors"
 )
 
 var (
@@ -27,19 +30,37 @@ func (c *itemsController) Get(w http.ResponseWriter, r *http.Request) {}
 
 // Create creates an item
 func (c *itemsController) Create(w http.ResponseWriter, r *http.Request) {
+	// authorize the request
 	if err := oauth.AuthenticateRequest(r); err != nil {
-		// TODO: Return error to the caller
+		http_utils.ResponseError(w, err)
 		return
 	}
-	item := items.Item{
-		Seller: oauth.GetCallerID(r),
-	}
 
-	result, err := services.ItemsService.Create(item)
+	// read the req body
+	requestBody, err := ioutil.ReadAll(r.Body)
 	if err != nil {
-		// TODO: Return error json to the user.
+		respError := rest_errors.NewBadRequestError("invalid request body")
+		http_utils.ResponseError(w, respError)
+		return
 	}
-	fmt.Println(result)
-	// Todo return the created item with
+	defer r.Body.Close()
 
+	// build the itemRequest json
+	var itemRequest items.Item
+	if err := json.Unmarshal(requestBody, &itemRequest); err != nil {
+		respError := rest_errors.NewBadRequestError("invalid json body")
+		http_utils.ResponseError(w, respError)
+		return
+	}
+
+	// append the seller id
+	itemRequest.Seller = oauth.GetCallerID(r)
+
+	// create the item
+	result, createErr := services.ItemsService.Create(itemRequest)
+	if err != nil {
+		http_utils.ResponseError(w, createErr)
+		return
+	}
+	http_utils.ResponseJSON(w, http.StatusCreated, result)
 }
