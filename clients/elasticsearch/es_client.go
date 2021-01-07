@@ -4,6 +4,7 @@ import (
 	"context"
 	"time"
 
+	"github.com/a-soliman/bookstore_utils-go/logger"
 	"github.com/olivere/elastic"
 )
 
@@ -23,11 +24,12 @@ type esClient struct {
 
 // Init initializes the client instance (should be invoked only one time)
 func Init() {
+	log := logger.GetLogger()
 	client, err := elastic.NewClient(
 		elastic.SetURL("http://localhost:9200"),
 		elastic.SetHealthcheckInterval(10*time.Second),
-		// elastic.SetErrorLog(log.New(os.Stderr, "ELASTIC ", log.LstdFlags)),
-		// elastic.SetInfoLog(log.New(os.Stdout, "", log.LstdFlags)),
+		elastic.SetErrorLog(log),
+		elastic.SetInfoLog(log),
 	)
 	if err != nil {
 		panic(err)

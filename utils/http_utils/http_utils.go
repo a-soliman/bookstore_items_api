@@ -15,6 +15,6 @@ func ResponseJSON(w http.ResponseWriter, statusCode int, body interface{}) {
 }
 
 // ResponseError a util function to set the appropriate header and encode the response body
-func ResponseError(w http.ResponseWriter, err *rest_errors.RestErr) {
-	ResponseJSON(w, err.Status, err)
+func ResponseError(w http.ResponseWriter, err rest_errors.RestErr) {
+	ResponseJSON(w, err.Status(), err)
 }
