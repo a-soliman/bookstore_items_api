@@ -23,5 +23,8 @@ func (s *itemsService) Get(id string) (*items.Item, *rest_errors.RestErr) {
 }
 
 func (s *itemsService) Create(item items.Item) (*items.Item, *rest_errors.RestErr) {
-	return nil, nil
+	if err := item.Save(); err != nil {
+		return nil, err
+	}
+	return &item, nil
 }

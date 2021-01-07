@@ -26,13 +26,23 @@ type ItemsControllerInterface interface {
 type itemsController struct{}
 
 // Get gets an item by id if exists
-func (c *itemsController) Get(w http.ResponseWriter, r *http.Request) {}
+func (c *itemsController) Get(w http.ResponseWriter, r *http.Request) {
+
+}
 
 // Create creates an item
 func (c *itemsController) Create(w http.ResponseWriter, r *http.Request) {
 	// authorize the request
 	if err := oauth.AuthenticateRequest(r); err != nil {
 		http_utils.ResponseError(w, err)
+		return
+	}
+
+	sellerID := oauth.GetCallerID(r)
+
+	if sellerID == 0 {
+		unAuthorizedErr := rest_errors.NewUnAuthorizedError("unable to retrieve user information from given access_token")
+		http_utils.ResponseError(w, unAuthorizedErr)
 		return
 	}
 
@@ -54,11 +64,11 @@ func (c *itemsController) Create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// append the seller id
-	itemRequest.Seller = oauth.GetCallerID(r)
+	itemRequest.Seller = sellerID
 
 	// create the item
 	result, createErr := services.ItemsService.Create(itemRequest)
-	if err != nil {
+	if createErr != nil {
 		http_utils.ResponseError(w, createErr)
 		return
 	}

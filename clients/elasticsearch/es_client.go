@@ -24,7 +24,7 @@ type esClient struct {
 // Init initializes the client instance (should be invoked only one time)
 func Init() {
 	client, err := elastic.NewClient(
-		elastic.SetURL("http://172.0.0.1:9200"),
+		elastic.SetURL("http://localhost:9200"),
 		elastic.SetHealthcheckInterval(10*time.Second),
 		// elastic.SetErrorLog(log.New(os.Stderr, "ELASTIC ", log.LstdFlags)),
 		// elastic.SetInfoLog(log.New(os.Stdout, "", log.LstdFlags)),
@@ -42,8 +42,15 @@ func (c *esClient) setClient(client *elastic.Client) {
 
 func (c *esClient) Index(index string, doc interface{}) (*elastic.IndexResponse, error) {
 	ctx := context.Background()
-	return c.client.Index().
+	result, err := c.client.Index().
 		Index("items").
+		Type("item").
 		BodyJson(doc).
 		Do(ctx)
+
+	if err != nil {
+		// log the error
+		return nil, err
+	}
+	return result, nil
 }
