@@ -4,12 +4,14 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
+	"strings"
 
 	"github.com/a-soliman/bookstore_items_api/domain/items"
 	"github.com/a-soliman/bookstore_items_api/services"
 	"github.com/a-soliman/bookstore_items_api/utils/http_utils"
 	"github.com/a-soliman/bookstore_oauth-go/oauth"
 	"github.com/a-soliman/bookstore_utils-go/rest_errors"
+	"github.com/gorilla/mux"
 )
 
 var (
@@ -27,7 +29,16 @@ type itemsController struct{}
 
 // Get gets an item by id if exists
 func (c *itemsController) Get(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	itemID := strings.TrimSpace(vars["id"])
 
+	item, err := services.ItemsService.Get(itemID)
+	if err != nil {
+		http_utils.ResponseError(w, err)
+		return
+	}
+
+	http_utils.ResponseJSON(w, http.StatusOK, item)
 }
 
 // Create creates an item
@@ -41,7 +52,7 @@ func (c *itemsController) Create(w http.ResponseWriter, r *http.Request) {
 	sellerID := oauth.GetCallerID(r)
 
 	if sellerID == 0 {
-		unAuthorizedErr := rest_errors.NewUnAuthorizedError("unable to retrieve user information from given access_token")
+		unAuthorizedErr := rest_errors.NewUnauthorizedError("unable to retrieve user information from given access_token")
 		http_utils.ResponseError(w, unAuthorizedErr)
 		return
 	}
