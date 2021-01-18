@@ -4,10 +4,14 @@ github.com/a-soliman/bookstore_oauth-go v0.0.0-20210107214110-a7ec6e109143 h1:99
 github.com/a-soliman/bookstore_oauth-go v0.0.0-20210107214110-a7ec6e109143/go.mod h1:YKzgfMOIaLlYMocaurP0p0dqjyl7io7exZv9//9DrxA=
 github.com/a-soliman/bookstore_oauth-go v0.0.0-20210107220605-e99603caea78 h1:QNuaHBQDTn+jHgPj1T1FEgpz6h17Ihk6jWIeD0YRdY8=
 github.com/a-soliman/bookstore_oauth-go v0.0.0-20210107220605-e99603caea78/go.mod h1:YKzgfMOIaLlYMocaurP0p0dqjyl7io7exZv9//9DrxA=
+github.com/a-soliman/bookstore_oauth-go v0.0.0-20210118170757-92a06a0cd1a0 h1:4t21lklg4JD4Eer3s1iOpaByvuV1RXbwDR/wK/Orjx4=
+github.com/a-soliman/bookstore_oauth-go v0.0.0-20210118170757-92a06a0cd1a0/go.mod h1:8viSe+NpduDoOesaJ+Sjnxle9HH/VkYyxLnHJS4Q+yw=
 github.com/a-soliman/bookstore_utils-go v0.0.0-20210107212128-9798edf05b8a h1:wzI4VN1CEsJl0FQcTxLZQ6cAb+NJbTPKDyIP3HWwxw8=
 github.com/a-soliman/bookstore_utils-go v0.0.0-20210107212128-9798edf05b8a/go.mod h1:vJBICx4XBJ1NA6p9EBdy7Ogwqlyrhfo8abf0hRS929g=
 github.com/a-soliman/bookstore_utils-go v0.0.0-20210107230621-b1e6aeb90a92 h1:Dc8UCAoR9Xml4kLmgMmCs6XOgXuLAErEPGmjXR9CH1A=
 github.com/a-soliman/bookstore_utils-go v0.0.0-20210107230621-b1e6aeb90a92/go.mod h1:vJBICx4XBJ1NA6p9EBdy7Ogwqlyrhfo8abf0hRS929g=
+github.com/a-soliman/bookstore_utils-go v0.0.0-20210108002208-e60095fa88dc h1:SEusoK0qSFE2LhXt1OhiYADkm5N1z5UjoRdciL7IXko=
+github.com/a-soliman/bookstore_utils-go v0.0.0-20210108002208-e60095fa88dc/go.mod h1:vJBICx4XBJ1NA6p9EBdy7Ogwqlyrhfo8abf0hRS929g=
 github.com/davecgh/go-spew v1.1.0 h1:ZDRjVQ15GmhC3fiQ8ni8+OwkZQO4DARzQgrnXU1Liz8=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=

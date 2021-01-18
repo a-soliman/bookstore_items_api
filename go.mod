@@ -3,8 +3,8 @@ module github.com/a-soliman/bookstore_items_api
 go 1.14
 
 require (
-	github.com/a-soliman/bookstore_oauth-go v0.0.0-20210107220605-e99603caea78
-	github.com/a-soliman/bookstore_utils-go v0.0.0-20210107230621-b1e6aeb90a92
+	github.com/a-soliman/bookstore_oauth-go v0.0.0-20210118170757-92a06a0cd1a0
+	github.com/a-soliman/bookstore_utils-go v0.0.0-20210108002208-e60095fa88dc
 	github.com/fortytw2/leaktest v1.3.0 // indirect
 	github.com/google/go-cmp v0.5.4 // indirect
 	github.com/gorilla/mux v1.8.0
