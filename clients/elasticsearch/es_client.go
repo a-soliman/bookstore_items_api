@@ -3,15 +3,23 @@ package elasticsearch
 import (
 	"context"
 	"fmt"
+	"log"
+	"os"
 	"time"
 
 	"github.com/a-soliman/bookstore_utils-go/logger"
+	"github.com/joho/godotenv"
 	"github.com/olivere/elastic"
+)
+
+const (
+	elasticsearchHostsVar = "ELASTICSEARCH_HOSTS"
 )
 
 var (
 	// Client the exported instance
-	Client esClientInterface = &esClient{}
+	Client             esClientInterface = &esClient{}
+	elasticsearchHosts                   = goDotEnvVariable(elasticsearchHostsVar)
 )
 
 type esClientInterface interface {
@@ -29,7 +37,7 @@ type esClient struct {
 func Init() {
 	log := logger.GetLogger()
 	client, err := elastic.NewClient(
-		elastic.SetURL("http://localhost:9200"),
+		elastic.SetURL(elasticsearchHosts),
 		elastic.SetHealthcheckInterval(10*time.Second),
 		elastic.SetErrorLog(log),
 		elastic.SetInfoLog(log),
@@ -90,4 +98,16 @@ func (c *esClient) Search(index string, docType string, query elastic.Query) (*e
 		return nil, err
 	}
 	return result, nil
+}
+
+func goDotEnvVariable(key string) string {
+
+	// load .env file
+	err := godotenv.Load(".env")
+
+	if err != nil {
+		log.Fatalf("Error loading .env file")
+	}
+
+	return os.Getenv(key)
 }
